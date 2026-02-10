@@ -12,7 +12,7 @@ PocketPantry is a simple mobile pantry inventory app that helps you keep track o
 
 ## Tech Stack
 - Flutter (Dart)
-- Local storage: TBD (Hive or Isar)
+- Local storage: Hive
 
 ## Getting Started
 1. Clone the repo
