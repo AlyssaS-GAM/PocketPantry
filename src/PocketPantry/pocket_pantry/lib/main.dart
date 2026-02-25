@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'pantry_item.dart';
 
-void main() {
+void main() async{ //app shouldnt start till hive is ready
+  WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  Hive.registerAdapter(PantryItemAdapter());
+  await Hive.openBox<PantryItem>('pantryItems');
   runApp(const MainApp());
 }
 
