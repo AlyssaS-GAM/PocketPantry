@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'pantry_item.dart';
-import 'pantry_box.dart';
+import 'inventory_screen.dart';
 
 void main() async{ //app shouldnt start till hive is ready
   WidgetsFlutterBinding.ensureInitialized();
@@ -9,7 +9,10 @@ void main() async{ //app shouldnt start till hive is ready
   Hive.registerAdapter(PantryItemAdapter());
   await Hive.openBox<PantryItem>('pantryItems');
 
-  /* FOR TESTING ITEMS */
+  /* FOR TESTING SAVING AND LOADING ITEMS 
+  
+  import 'pantry_box.dart';
+
   PantryBox.saveItem(PantryItem(
     name: 'Test Apple',
     category: 'Produce',
@@ -21,6 +24,7 @@ void main() async{ //app shouldnt start till hive is ready
   print('Items in box: ${items.length}');
   print('First item: ${items.first.name}');
 
+ */
 
   runApp(const MainApp());
 }
@@ -31,20 +35,8 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Pocket Pantry'),
-          backgroundColor: Colors.teal,
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.add),
-              onPressed: (){
-                // To be added
-              },
-            )
-          ],
-        )
-      ),
+      debugShowCheckedModeBanner: false,
+      home: const InventoryScreen(),
     );
   }
 }
