@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'pantry_box.dart';
 import 'pantry_item.dart';
+import 'add_item_screen.dart';
+
 
 class InventoryScreen extends StatefulWidget {
   const InventoryScreen({super.key});
@@ -34,8 +36,12 @@ class _InventoryScreenState extends State<InventoryScreen>{
         actions: [
           IconButton(
             icon: const Icon(Icons.add),
-            onPressed: (){
-              //Navigate to Add Item screen
+            onPressed: () async {
+              await Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const AddItemScreen()),
+              );
+              loadItems();
             }
           )
         ],

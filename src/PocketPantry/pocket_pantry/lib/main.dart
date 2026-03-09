@@ -3,7 +3,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'pantry_item.dart';
 import 'inventory_screen.dart';
 
-void main() async{ //app shouldnt start till hive is ready
+void main() async{ // App shouldnt start till hive is ready
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   Hive.registerAdapter(PantryItemAdapter());
@@ -35,7 +35,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: false, // Hide debug banner
       home: const InventoryScreen(),
     );
   }
