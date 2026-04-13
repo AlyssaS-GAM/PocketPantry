@@ -58,8 +58,39 @@ class _InventoryScreenState extends State<InventoryScreen>{
               return ListTile(
                 title: Text(item.name),
                 subtitle: Text(item.category),
-                trailing: Text('Qty: ${item.quantity}'),
-                );
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text('Qty: ${item.quantity}'),
+                    IconButton(
+                      icon: const Icon(Icons.delete, color: Colors.red),
+                      onPressed: () async {
+                        final confirm = await showDialog<bool>(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            title: const Text('Delete Item'),
+                            content: Text('Are you sure you want to delete ${item.name}?'),
+                            actions: [
+                              TextButton(
+                                onPressed: () => Navigator.pop(context, false),
+                                child: const Text('Cancel'),
+                              ),
+                              TextButton(
+                                onPressed: () => Navigator.pop(context, true),
+                                child: const Text('Delete'),
+                              ),
+                            ],
+                          ),
+                        );
+                        if (confirm == true) {
+                          PantryBox.deleteItem(index);
+                          loadItems();
+                        }
+                      },
+                    ),
+                  ],
+                ),
+              );
             },
           ),
 
