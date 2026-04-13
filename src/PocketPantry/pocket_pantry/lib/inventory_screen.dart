@@ -63,6 +63,18 @@ class _InventoryScreenState extends State<InventoryScreen>{
                   children: [
                     Text('Qty: ${item.quantity}'),
                     IconButton(
+                      icon: const Icon(Icons.edit, color: Colors.teal),
+                      onPressed: () async {
+                        await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => AddItemScreen(existingItem: item),
+                          ),
+                        );
+                        loadItems();
+                      },
+                    ),
+                    IconButton(
                       icon: const Icon(Icons.delete, color: Colors.red),
                       onPressed: () async {
                         final confirm = await showDialog<bool>(

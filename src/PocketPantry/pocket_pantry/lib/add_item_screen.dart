@@ -3,7 +3,8 @@ import 'pantry_box.dart';
 import 'pantry_item.dart';
 
 class AddItemScreen extends StatefulWidget {
-  const AddItemScreen({super.key});
+  final PantryItem? existingItem;
+  const AddItemScreen({super.key, this.existingItem});
 
   @override
   State<AddItemScreen> createState() => _AddItemScreenState();
@@ -17,6 +18,16 @@ class _AddItemScreenState extends State<AddItemScreen> {
   final _nameFocus = FocusNode();
   final _categoryFocus = FocusNode();
   final _quantityFocus = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.existingItem != null) {
+      _nameController.text = widget.existingItem!.name;
+      _categoryController.text = widget.existingItem!.category;
+      _quantityController.text = widget.existingItem!.quantity.toString();
+    }
+  }
 
   @override
   void dispose() {
@@ -39,13 +50,20 @@ class _AddItemScreenState extends State<AddItemScreen> {
       return;
     }
 
-    final newItem = PantryItem(
-      name: _nameController.text,
-      category: _categoryController.text,
-      quantity: int.parse(_quantityController.text),
-      dateAdded: DateTime.now(),
-    );
-    PantryBox.saveItem(newItem);
+    if (widget.existingItem != null) {
+      widget.existingItem!.name = _nameController.text;
+      widget.existingItem!.category = _categoryController.text;
+      widget.existingItem!.quantity = int.parse(_quantityController.text);
+      widget.existingItem!.save();
+    } else {
+      final newItem = PantryItem(
+        name: _nameController.text,
+        category: _categoryController.text,
+        quantity: int.parse(_quantityController.text),
+        dateAdded: DateTime.now(),
+      );
+      PantryBox.saveItem(newItem);
+    }
     Navigator.pop(context);
   }
 
@@ -53,7 +71,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add Item'),
+        title: Text(widget.existingItem != null ? 'Edit Item' : 'Add Item'),
         backgroundColor: Colors.teal,
       ),
       body: Padding(
