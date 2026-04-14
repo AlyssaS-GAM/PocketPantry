@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'pantry_box.dart';
 import 'pantry_item.dart';
 import 'add_item_screen.dart';
+import 'item_detail_screen.dart';
 
 class InventoryScreen extends StatefulWidget {
   const InventoryScreen({super.key});
@@ -137,8 +138,16 @@ class _InventoryScreenState extends State<InventoryScreen> {
                     itemCount: filteredItems.length,
                     itemBuilder: (context, index) {
                       final item = filteredItems[index];
-                      return ListTile(
-                        title: Text(item.name),
+                    return ListTile(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ItemDetailScreen(item: item),
+                          ),
+                        );
+                      },
+                      title: Text(item.name),
                         subtitle: Text(item.category),
                         trailing: Row(
                           mainAxisSize: MainAxisSize.min,
