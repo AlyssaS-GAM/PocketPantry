@@ -37,6 +37,27 @@ class _InventoryScreenState extends State<InventoryScreen> {
     });
   }
 
+  String selectedCategory = 'All';
+
+  void filterByCategory(String category) {
+    setState(() {
+      selectedCategory = category;
+      if (category == 'All') {
+        filteredItems = items;
+      } else {
+        filteredItems = items
+            .where((item) => item.category == category)
+            .toList();
+      }
+    });
+  }
+
+  List<String> getCategories() {
+    final categories = items.map((item) => item.category).toSet().toList();
+    categories.insert(0, 'All');
+    return categories;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,6 +89,22 @@ class _InventoryScreenState extends State<InventoryScreen> {
                 border: OutlineInputBorder(),
               ),
               onChanged: searchItems,
+            ),
+          ),
+          SizedBox(
+            height: 50,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: getCategories().map((category) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                  child: FilterChip(
+                    label: Text(category),
+                    selected: selectedCategory == category,
+                    onSelected: (_) => filterByCategory(category),
+                  ),
+                );
+              }).toList(),
             ),
           ),
           Expanded(
