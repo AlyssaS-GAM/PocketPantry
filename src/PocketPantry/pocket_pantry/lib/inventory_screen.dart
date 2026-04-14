@@ -58,6 +58,18 @@ class _InventoryScreenState extends State<InventoryScreen> {
     return categories;
   }
 
+  void sortItems(String sortBy) {
+  setState(() {
+    if (sortBy == 'Name') {
+      filteredItems.sort((a, b) => a.name.compareTo(b.name));
+    } else if (sortBy == 'Category') {
+      filteredItems.sort((a, b) => a.category.compareTo(b.category));
+    } else if (sortBy == 'Date') {
+      filteredItems.sort((a, b) => b.dateAdded.compareTo(a.dateAdded));
+    }
+  });
+}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,6 +77,15 @@ class _InventoryScreenState extends State<InventoryScreen> {
         title: const Text('PocketPantry'),
         backgroundColor: Colors.blueGrey,
         actions: [
+          PopupMenuButton<String>(
+            icon: const Icon(Icons.sort),
+            onSelected: sortItems,
+            itemBuilder: (context) => [
+              const PopupMenuItem(value: 'Name', child: Text('Sort by Name')),
+              const PopupMenuItem(value: 'Category', child: Text('Sort by Category')),
+              const PopupMenuItem(value: 'Date', child: Text('Sort by Date')),
+            ],
+          ),
           IconButton(
             icon: const Icon(Icons.add),
             onPressed: () async {
