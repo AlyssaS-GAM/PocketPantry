@@ -78,7 +78,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
         backgroundColor: Colors.blueGrey,
         actions: [
           PopupMenuButton<String>(
-            icon: const Icon(Icons.sort),
+            icon: const Icon(Icons.sort, color: Colors.white),
             onSelected: sortItems,
             itemBuilder: (context) => [
               const PopupMenuItem(value: 'Name', child: Text('Sort by Name')),
@@ -87,7 +87,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
             ],
           ),
           IconButton(
-            icon: const Icon(Icons.add),
+            icon: const Icon(Icons.add, color: Colors.white),
             onPressed: () async {
               await Navigator.push(
                 context,
